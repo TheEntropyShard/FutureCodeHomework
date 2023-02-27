@@ -56,7 +56,7 @@ public class HomeWork6 {
             for(int i = 0; i < this.times; i++) {
                 builder.append(this.sound).append(" ");
             }
-            return Collections.singletonList(builder.toString());
+            return Collections.singletonList(builder.toString().strip());
         }
 
         @Override
