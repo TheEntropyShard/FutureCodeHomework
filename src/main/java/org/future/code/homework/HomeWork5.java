@@ -65,6 +65,8 @@ public class HomeWork5 {
 
         public Person(String name) {
             this.name = name;
+            this.protection = 0;
+            this.health = 50;
         }
 
         public String announce() {
@@ -77,6 +79,7 @@ public class HomeWork5 {
             }
             this.health -= damage;
             if(this.health < 0) {
+                this.health = 0;
                 throw new PersonDead(String.format("Person %s умер", this.name));
             }
         }
