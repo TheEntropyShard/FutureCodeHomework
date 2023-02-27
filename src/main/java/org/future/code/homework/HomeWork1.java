@@ -1,8 +1,6 @@
 package org.future.code.homework;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Objects;
+import java.util.*;
 import java.util.function.Function;
 
 /**
@@ -69,17 +67,19 @@ public class HomeWork1 {
             for(int i = 0; i < this.students.length; i++) {
                 if(this.students[i] == null) {
                     this.students[i] = student;
-                    return;
+                    break;
                 }
             }
         }
 
         public String[] rollCall() {
-            String[] studentData = new String[this.students.length];
-            for(int i = 0; i < this.students.length; i++) {
-                studentData[i] = this.students[i].announce();
+            List<String> studentData = new ArrayList<>();
+            for(Student student : this.students) {
+                if(student != null) {
+                    studentData.add(student.announce());
+                }
             }
-            return studentData;
+            return studentData.toArray(new String[0]);
         }
 
         public String getName() {
