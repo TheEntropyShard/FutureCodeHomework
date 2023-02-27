@@ -2,11 +2,7 @@ package org.future.code.homework;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
@@ -78,22 +74,13 @@ public class HomeWork7 {
      * Метод должен вернуть колличество имен и фомилий (по отдельности) длинее чем 5 символов
      */
     public static Integer methodSix(List<String> names) {
-        /*List<String> namesList = names.stream()
-                .map(s -> s.split("\\s")[0])
+        return names.stream()
+                .flatMap(s -> Arrays.stream(s.split("\\s"))
+                        .filter(s2 -> s2.length() > 5)
+                )
                 .distinct()
-                .filter(s -> s.length() > 5)
-                .toList();
-        List<String> surnamesList = names.stream()
-                .map(s -> s.split("\\s")[1])
-                .distinct()
-                .filter(s -> s.length() > 5)
-                .toList();
-
-        return (int) namesList.size() + surnamesList.size();*/
-
-        //TODO либо я не понял, либо ответ не 61
-
-        return 0;
+                .toList()
+                .size();
     }
 
     /**
@@ -188,12 +175,14 @@ public class HomeWork7 {
             antiCheatList.add(NAMES_LONGER_THAN_SIX.toString());
             antiCheatList.add(NAMES_AND_SURNAMES_LONGER_THAN_FIVE.toString());
             calcHash(antiCheatList);
-        };
+        }
+
+        ;
 
         public static String bytesToHex(byte[] bytes) {
             char[] HEX_ARRAY = "0123456789ABCDEF".toCharArray();
             char[] hexChars = new char[bytes.length * 2];
-            for (int j = 0; j < bytes.length; j++) {
+            for(int j = 0; j < bytes.length; j++) {
                 int v = bytes[j] & 0xFF;
                 hexChars[j * 2] = HEX_ARRAY[v >>> 4];
                 hexChars[j * 2 + 1] = HEX_ARRAY[v & 0x0F];
@@ -208,13 +197,14 @@ public class HomeWork7 {
                 md.update(total.getBytes());
                 byte[] digest = md.digest();
                 System.out.println("AntiCheatCheck: " + bytesToHex(digest));
-            } catch (NoSuchAlgorithmException ignored) {}
+            } catch (NoSuchAlgorithmException ignored) {
+            }
         }
     }
 
     public static String constLen(String str, int len) {
         StringBuilder sb = new StringBuilder(str);
-        while (len-- - str.length() > 0) sb.append(" ");
+        while(len-- - str.length() > 0) sb.append(" ");
         return sb.toString();
     }
 
@@ -225,7 +215,8 @@ public class HomeWork7 {
         System.out.println("Ожидание: " + yellow.apply(constLen(exp.toString(), 15)));
         System.out.println("Реальность: " + green.apply(constLen(act.toString(), 15)));
         System.out.print("RESULT ");
-        if (Objects.equals(exp, act)) System.out.print("✅"); else System.out.print("❌");
+        if(Objects.equals(exp, act)) System.out.print("✅");
+        else System.out.print("❌");
         System.out.println();
     }
 
@@ -236,7 +227,8 @@ public class HomeWork7 {
         System.out.println("Ожидание: " + yellow.apply(constLen(exp.toString(), 15)));
         System.out.println("Реальность: " + green.apply(constLen(act.toString(), 15)));
         System.out.print("RESULT ");
-        if (Objects.equals(exp, act)) System.out.print("✅"); else System.out.print("❌");
+        if(Objects.equals(exp, act)) System.out.print("✅");
+        else System.out.print("❌");
         System.out.println();
     }
 }
