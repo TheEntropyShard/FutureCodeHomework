@@ -35,11 +35,60 @@ public class HomeWork1 {
             announce всех встудентов преподавателя
      */
     public static class Student {
-        // Напиши здесь свою реализацию класса Student
+        private final String name;
+        private final Integer grade;
+
+        public Student(String name, Integer grade) {
+            this.name = name;
+            this.grade = grade;
+        }
+
+        public String getName() {
+            return this.name;
+        }
+
+        public Integer getGrade() {
+            return this.grade;
+        }
+
+        public String announce() {
+            return String.format("%s учится в %d классе", this.name, this.grade);
+        }
     }
 
     public static class Teacher {
-        // Напиши здесь свою реализацию класса Teacher
+        private final String name;
+        private final Student[] students;
+
+        public Teacher(String name) {
+            this.name = name;
+            this.students = new Student[30];
+        }
+
+        public void addStudent(Student student) {
+            for(int i = 0; i < this.students.length; i++) {
+                if(this.students[i] == null) {
+                    this.students[i] = student;
+                    return;
+                }
+            }
+        }
+
+        public String[] rollCall() {
+            String[] studentData = new String[this.students.length];
+            for(int i = 0; i < this.students.length; i++) {
+                studentData[i] = this.students[i].announce();
+            }
+            return studentData;
+        }
+
+        public String getName() {
+            return this.name;
+        }
+
+        public Student[] getStudents() {
+            return this.students;
+        }
     }
 
     /*

@@ -25,47 +25,74 @@ public class HomeWork7 {
      * Метод должен вернуть список людей с фамилий или именем King
      */
     public static List<String> methodOne(List<String> names) {
-        // Твой код здесь
-        return Collections.emptyList();
+        return names.stream()
+                .filter(s -> s.contains("King"))
+                .toList();
     }
 
     /**
      * Метод должен вернуть список уникальных фамилий (2 позиция в строке)
      */
     public static List<String> methodTwo(List<String> names) {
-        // Твой код здесь
-        return Collections.emptyList();
+        return names.stream()
+                .map(s -> s.split("\\s")[1])
+                .distinct()
+                .toList();
     }
 
     /**
      * Метод должен вернуть список уникальных имен начинающихся с L
      */
     public static List<String> methodThree(List<String> names) {
-        // Твой код здесь
-        return Collections.emptyList();
+        return names.stream()
+                .map(s -> s.split("\\s")[0])
+                .distinct()
+                .filter(s -> s.startsWith("L"))
+                .toList();
     }
 
     /**
      * Метод должен вернуть список уникальных фамилий начинающихся с W отсортированный по алфавиту
      */
     public static List<String> methodFour(List<String> names) {
-        // Твой код здесь
-        return Collections.emptyList();
+        return names.stream()
+                .map(s -> s.split("\\s")[1])
+                .distinct()
+                .filter(s -> s.startsWith("W"))
+                .sorted()
+                .toList();
     }
 
     /**
      * Метод должен вернуть колличество имен длинее чем 6 символов
      */
     public static Integer methodFive(List<String> names) {
-        // Твой код здесь
-        return 0;
+        return (int) names.stream()
+                .map(s -> s.split("\\s")[0])
+                .distinct()
+                .filter(s -> s.length() > 6)
+                .count();
     }
 
     /**
      * Метод должен вернуть колличество имен и фомилий (по отдельности) длинее чем 5 символов
      */
     public static Integer methodSix(List<String> names) {
-        // Твой код здесь
+        /*List<String> namesList = names.stream()
+                .map(s -> s.split("\\s")[0])
+                .distinct()
+                .filter(s -> s.length() > 5)
+                .toList();
+        List<String> surnamesList = names.stream()
+                .map(s -> s.split("\\s")[1])
+                .distinct()
+                .filter(s -> s.length() > 5)
+                .toList();
+
+        return (int) namesList.size() + surnamesList.size();*/
+
+        //TODO либо я не понял, либо ответ не 61
+
         return 0;
     }
 
@@ -74,8 +101,12 @@ public class HomeWork7 {
      * Напрмер "David Z.". Список должен быть отсортирован по алфавиту и состоять только из уникальных значений
      */
     public static List<String> methodSeven(List<String> names) {
-        // Твой код здесь
-        return Collections.emptyList();
+        return names.stream()
+                .filter(s -> s.split("\\s")[1].startsWith("K") || s.split("\\s")[1].startsWith("S"))
+                .map(s -> s.split("\\s")[0] + " " + s.split("\\s")[1].charAt(0) + ".")
+                .distinct()
+                .sorted()
+                .toList();
     }
 
     public static void main(String[] args) {

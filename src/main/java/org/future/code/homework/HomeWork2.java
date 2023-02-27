@@ -7,6 +7,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Function;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Правила выполнения домашнего задания:
@@ -38,13 +40,27 @@ public class HomeWork2 {
      *     - если метод validateLogin выбросил ошибку - вернуть false
      */
 
-    public static void validateLogin(String login) {
-        //Место для Вашего кода из пункта 2
+    private static class LoginValidationException extends Exception {
+        public LoginValidationException(String message) {
+            super(message);
+        }
+    }
+
+    public static final Pattern PATTERN = Pattern.compile("\\S*(\\S*([a-zA-Z]\\S*[0-9])|([0-9]\\S*[a-zA-Z]))\\S*");
+
+    public static void validateLogin(String login) throws LoginValidationException {
+        if(login.length() > 20) throw new LoginValidationException("Длина логина не должна быть больше 20 символов");
+        Matcher matcher = PATTERN.matcher(login);
+        if(!matcher.find()) throw new LoginValidationException("Неправильный логин: " + login);
     }
 
     public static Boolean isLoginValid(String login) {
-        //Место для Вашего кода из пункта 3
-        return false;
+        try {
+            validateLogin(login);
+        } catch (LoginValidationException e) {
+            return false;
+        }
+        return true;
     }
 
     /*

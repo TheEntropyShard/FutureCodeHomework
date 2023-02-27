@@ -1,6 +1,6 @@
 package org.future.code.homework;
 
-import java.util.Objects;
+import java.util.*;
 import java.util.function.Function;
 
 public class HomeWork6 {
@@ -38,23 +38,82 @@ public class HomeWork6 {
  */
 
     public interface Playable {
-        // Напиши здесь свою реализацию интерфейса Playable
+        List<String> play();
+        List<String> playWith(Playable playable);
     }
 
-    public static abstract class Instrument {
-        // Напиши здесь свою реализацию класса Instrument
+    public static abstract class Instrument implements Playable {
+        private final String sound;
+        private final Integer times;
+
+        public Instrument(String sound, Integer times) {
+            this.sound = sound;
+            this.times = times;
+        }
+
+        public List<String> play() {
+            StringBuilder builder = new StringBuilder();
+            for(int i = 0; i < this.times; i++) {
+                builder.append(this.sound).append(" ");
+            }
+            return Collections.singletonList(builder.toString());
+        }
+
+        @Override
+        public List<String> playWith(Playable playable) {
+            List<String> sounds = new ArrayList<>();
+            sounds.addAll(this.play());
+            sounds.addAll(playable.play());
+            return sounds;
+        }
+
+        public String getSound() {
+            return this.sound;
+        }
+
+        public Integer getTimes() {
+            return this.times;
+        }
     }
 
-    public static class Guitar {
-        // Напиши здесь свою реализацию класса Instrument
+    public static class Guitar extends Instrument {
+        public Guitar() {
+            super("Трунь", 2);
+        }
     }
 
-    public static class Drum {
-        // Напиши здесь свою реализацию класса Instrument
+    public static class Drum extends Instrument {
+        public Drum() {
+            super("Бац", 3);
+        }
     }
 
-    public static class Orchestra {
-        // Напиши здесь свою реализацию класса Orchestra
+    public static class Orchestra implements Playable {
+        private List<Instrument> instruments;
+
+        public Orchestra(Instrument... instruments) {
+            this.instruments = new ArrayList<>();
+            this.instruments.addAll(Arrays.asList(instruments));
+        }
+
+        @Override
+        public List<String> play() {
+            List<String> sounds = new ArrayList<>();
+            this.instruments.forEach(instrument -> sounds.addAll(instrument.play()));
+            return sounds;
+        }
+
+        @Override
+        public List<String> playWith(Playable playable) {
+            List<String> sounds = new ArrayList<>();
+            sounds.addAll(this.play());
+            sounds.addAll(playable.play());
+            return sounds;
+        }
+
+        public List<Instrument> getInstruments() {
+            return this.instruments;
+        }
     }
 
     public static void main(String[] args) {

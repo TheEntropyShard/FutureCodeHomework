@@ -53,15 +53,89 @@ public class HomeWork5 {
     }
 
     public static class Person {
-        // Напиши здесь свою реализацию класса Person
+        private final String name;
+        private Integer protection;
+        private Integer health;
+
+        protected Person(String name, Integer protection, Integer health) {
+            this.name = name;
+            this.protection = protection;
+            this.health = health;
+        }
+
+        public Person(String name) {
+            this.name = name;
+        }
+
+        public String announce() {
+            return String.format("Person %s имеет характеристики: %d здоровья и %d защиты", this.name, this.health, this.protection);
+        }
+
+        public void takeDamage(Integer damage) throws Exception {
+            if(damage < 0) {
+                throw new Exception("Урон не может быть меньше чем 0 (дано " + damage + ")");
+            }
+            this.health -= damage;
+            if(this.health < 0) {
+                throw new PersonDead(String.format("Person %s умер", this.name));
+            }
+        }
+
+        public Integer facePunch() {
+            return 1;
+        }
+
+        public String getName() {
+            return this.name;
+        }
+
+        public Integer getProtection() {
+            return this.protection;
+        }
+
+        public Integer getHealth() {
+            return this.health;
+        }
     }
 
     public static class Mage extends Person{
-        // Напиши здесь свою реализацию класса Mage (не забудь про наследование от Person)
+        protected Mage(String name) {
+            super(name, 15, 100);
+        }
+
+        @Override
+        public String announce() {
+            return "Mage " + super.announce();
+        }
+
+        @Override
+        public void takeDamage(Integer damage) throws Exception {
+            super.takeDamage(damage - super.protection - super.health % 10);
+        }
+
+        public Integer fireBall() {
+            return 45;
+        }
     }
 
     public static class Archer extends Person{
-        // Напиши здесь свою реализацию класса Archer (не забудь про наследование от Person)
+        public Archer(String name) {
+            super(name, 12, 120);
+        }
+
+        @Override
+        public String announce() {
+            return "Archer" + super.announce();
+        }
+
+        @Override
+        public void takeDamage(Integer damage) throws Exception {
+            super.takeDamage(damage - super.protection + super.health % 10);
+        }
+
+        public Integer shootBow() {
+            return 40 + super.health % 10;
+        }
     }
 
     /*
